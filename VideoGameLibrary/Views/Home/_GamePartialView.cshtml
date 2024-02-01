@@ -1,0 +1,40 @@
+﻿@model Game
+
+@if (Model == null)
+{
+    <h2>No games have been provided.</h2>
+}
+else
+{
+    <div class="card h-100">
+        <img class="card-img-top img-fluid" src="@Model.Image"/>
+        <div class="card-body">
+            <h5 class="card-title">@Model.Title</h5>
+            <p class="card-text">@Model.Platform</p>
+            <p class="card-text">@Model.Genre</p>
+            <p class="card-text">@Model.Rating</p>
+            <p class="card-text">@Model.Year</p>        
+            <form asp-controller="Home" asp-action="Loan" asp-route-id="@Model.Id" method="post">
+                <div class="input-group mb-3">
+                    <input name="loanName" type="text" class="form-control" placeholder="Loan Name" aria-label="loanName" aria-describedby="button-addon2" />
+                    <button class="btn btn-primary" type="submit" id="button-addon2">loan</button>
+                </div>
+            </form>            
+            @if (Model.LoanedTo != null || Model.LoanDate != null)
+            {                                
+                <form asp-controller="Home" asp-action="Return" asp-route-id="@Model.Id" method="post">
+                    <div class="input-group mb-3">                        
+                        <input class="form-control" placeholder="Loaned to @Model.LoanedTo on @Model.LoanDate" aria-describedby="button-addon2" disabled/>                        
+                        <button class="btn btn-primary" type="submit" id="button-addon2">Return</button>
+                    </div>
+                </form>
+            }
+            <div class="row">
+                <div class="d-flex justify-content-between">
+                    <a asp-controller="Home" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary mx-2"> Edit Game <i class="bi bi-pencil"></i></a>
+                    <a asp-controller="Home" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-primary mx-2 text-danger"> Delete Game <i class="bi bi-trash3"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,40 @@
+﻿@model Game
+
+@if (Model == null)
+{
+    <h2>No games have been provided.</h2>
+}
+else
+{
+    <div class="card" style="width:15rem;">
+        <img class="card-img-top" src="@Model.Image" />
+        <h5 class="card-title text-primary">@Model.Title</h5>
+        <div class="card-body text-primary">
+            <p>@Model.Platform</p>
+            <p>@Model.Genre</p>
+            <p>@Model.Rating</p>
+            <p>@Model.Year</p>
+            <div class="input-group mb-3">
+                <form asp-controller="Home" asp-action="Loan" asp-route-id="@Model.Id" method="post">                    
+                    <input type="text" class="form-control" placeholder="Enter Name" aria-label="Borrowers name" aria-describedby="button-addon2" for="loanName" name="loanName" />
+                    <button type="submit" class="btn btn-primary" id="button-addon2">loan</button>
+                </form>                
+            </div>            
+            @* <form asp-controller="Home" asp-action="Loan" asp-route-id="@Model.Id" method="post">
+                <label for="loanName">enter name for loan:</label>
+                <input for="loanName" name="loanName" type="text" />
+                <button type="submit">loan</button>
+            </form> *@
+            <a asp-controller="Home" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary mx-2"> Edit Game <i class="bi bi-pencil"></i></a>
+            <a asp-controller="Home" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-primary mx-2 text-danger"> Delete Game <i class="bi bi-trash"></i></a>
+            @if (Model.LoanedTo != null || Model.LoanDate != null)
+            {
+                <p>@Model.LoanedTo</p>
+                <p>@Model.LoanDate</p>
+                <form asp-controller="Home" asp-action="Return" asp-route-id="@Model.Id" method="post">
+                    <button type="submit">Return</button>
+                </form>
+            }
+        </div>
+    </div>
+}

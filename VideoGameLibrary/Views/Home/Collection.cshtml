@@ -1,0 +1,21 @@
+﻿@model IEnumerable<Game>
+
+@if (Model == null)
+{
+    <h2>No Games Provided</h2>
+}
+else
+{
+    <div class="row p-3 m-3">
+        <div class="col d-flex justify-content-between">
+            <h1>@Model.Count() Games Available</h1>
+            <a asp-controller="Home" asp-action="Add" class="btn btn-primary mx-2"> Add Game <i class="bi bi-plus-circle"></i></a>
+        </div>
+    </div>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @foreach (Game g in Model)
+        {
+            <partial name="_GamePartialView.cshtml" for="@g" />
+        }
+    </div>
+}
