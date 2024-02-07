@@ -1,0 +1,31 @@
+﻿@model Game
+
+<form asp-controller="Home" asp-action="Filter" method="post">
+    <div class="border p-2 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary">Filter for Games with these Attributes</h2>
+            <hr />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Genre"></label>
+            <input asp-for="Genre" class="form-control" />
+            <span asp-validation-for="Genre" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Platform"></label>
+            <input asp-for="Platform" class="form-control" />
+            <span asp-validation-for="Platform" class="text-danger"></span>
+        </div>        
+        <div class="mb-3">
+            <label asp-for="Rating"></label>
+            <input asp-for="Rating" class="form-control" />
+            <span asp-validation-for="Rating" class="text-danger"></span>
+        </div>        
+        <div class="row">
+            <div class="d-flex justify-content-between">
+                <a asp-controller="Home" asp-action="Collection" class="btn btn-primary">Back</a>        
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>            
+        </div>
+    </div>
+</form>

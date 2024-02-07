@@ -8,12 +8,6 @@ namespace VideoGameLibrary.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
         IDataAccessLayer dal;
         public HomeController(IDataAccessLayer indal)
         {
@@ -36,6 +30,23 @@ namespace VideoGameLibrary.Controllers
                 return View(search);
             }
             return View();
+        }
+        [HttpGet]
+        public IActionResult Filter()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Filter(string genre, string platform, string rating)
+        {
+            if(ModelState.IsValid)
+            {
+                IEnumerable<Game> filteredGames = dal.FilterCollection(genre, platform, rating);
+                return View("Collection", filteredGames);
+            } else
+            {
+                return View();
+            }
         }
         [HttpGet]
         public IActionResult Add()

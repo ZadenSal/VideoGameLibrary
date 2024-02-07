@@ -43,7 +43,8 @@ namespace VideoGameLibrary.Data
 
         public IEnumerable<Game> FilterCollection(string genre, string platform, string rating)
         {
-            throw new NotImplementedException();
+            IEnumerable<Game> filteredGames = db.Games.Where(g => g.Genre.ToLower().Contains(genre.ToLower()) && g.Platform.ToLower().Contains(platform.ToLower()) && g.Rating.ToLower().Contains(rating.ToLower()));
+            return filteredGames;
         }
     }
 }
