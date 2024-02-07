@@ -9,5 +9,6 @@ namespace VideoGameLibrary.Interfaces
         void RemoveGame(int? id);        
         IEnumerable<Game> SearchForGames(string key);
         IEnumerable<Game> GetCollection();
+        IEnumerable<Game> FilterCollection(string genre, string platform, string rating);
     }
 }

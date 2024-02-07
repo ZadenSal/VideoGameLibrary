@@ -3,8 +3,7 @@
 namespace VideoGameLibrary.Models
 {
     public class Game
-    {
-        private static int nextID = 0;
+    {        
         public Game()
         {
 
@@ -20,8 +19,8 @@ namespace VideoGameLibrary.Models
             LoanedTo = loanedTo;
             LoanDate = loanDate;
         }
-
-        public int? Id { get; set; } = nextID++;
+        [Key]
+        public int Id { get; set; }
         [Required(ErrorMessage = "Game title is required")]
         public string Title { get; set; }
         [Required(ErrorMessage = "Please enter a valid platform")]

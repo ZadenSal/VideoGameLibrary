@@ -14,7 +14,11 @@ namespace VideoGameLibrary.Controllers
         {
             _logger = logger;
         }
-        IDataAccessLayer dal = new GameListDAL();
+        IDataAccessLayer dal;
+        public HomeController(IDataAccessLayer indal)
+        {
+            dal = indal;
+        }
         public IActionResult Index()
         {
             return View();

@@ -5,41 +5,45 @@ namespace VideoGameLibrary.Data
 {
     public class GameListDAL : IDataAccessLayer
     {
-        private static List<Game> GameList = new List<Game>
+        private VideoGameDBContext db;
+
+        public GameListDAL(VideoGameDBContext indb)
         {
-            new Game("Crash Bandicoot Mutant Island", "Mobile Platform", "Action", "E", 2009, "/images/crash.webp", null, null),
-            new Game("Super Mario 64", "Nintendo", "3D Platformer", "E", 1996, "/images/mario64.webp", null, null),
-            new Game("Tetris", "Electronika", "Puzzle", "E", 1985, "/images/tetris.webp", null, null),
-            new Game("Metroid Zero Mission", "Game Boy Advance", "Action-Adventure", "E", 2004, "/images/metroid.webp", null, null),
-            new Game("Crash Bandicoot Twinsanity", "PlayStation 2/Xbox", "2D Platformer", "E", 2004, "/images/crash2.webp", null, null),
-            new Game("Spyro The Dragon", "PlayStation", "2D Platformer", "E", 1998, "/images/spyro.jpg", null, null)            
-        };
+            db = indb;
+        }        
         public void AddGame(Game game)
         {
-            GameList.Add(game);
+            db.Games.Add(game);
+            db.SaveChanges();
         }
 
         public void EditGame(Game game)
-        {
-            int i = GameList.FindIndex(x =>  x.Id == game.Id);
-            GameList[i] = game;
+        {            
+            db.Update(game);
+            db.SaveChanges();
         }
         public void RemoveGame(int? id)
         {
-            Game? foundGame = GameList.Where(g => g.Id == id).FirstOrDefault();
+            Game? foundGame = db.Games.Where(g => g.Id == id).FirstOrDefault();
             if (foundGame != null)
             {
-                GameList.Remove(foundGame);
+                db.Games.Remove(foundGame);
+                db.SaveChanges();
             }            
         }                
         public IEnumerable<Game> SearchForGames(string key)
         {
-            IEnumerable<Game> foundGames = GameList.Where(g => g.Title.ToLower().Contains(key.ToLower()));
+            IEnumerable<Game> foundGames = db.Games.Where(g => g.Title.ToLower().Contains(key.ToLower()));
             return foundGames;
         }
         public IEnumerable<Game> GetCollection()
         {
-            return GameList;
+            return db.Games;
+        }
+
+        public IEnumerable<Game> FilterCollection(string genre, string platform, string rating)
+        {
+            throw new NotImplementedException();
         }
     }
 }
