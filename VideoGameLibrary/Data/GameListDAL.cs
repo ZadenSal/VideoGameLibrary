@@ -40,11 +40,10 @@ namespace VideoGameLibrary.Data
         {
             return db.Games;
         }
-
         public IEnumerable<Game> FilterCollection(string genre, string platform, string rating)
         {
             IEnumerable<Game> filteredGames = db.Games.Where(g => g.Genre.ToLower().Contains(genre.ToLower()) && g.Platform.ToLower().Contains(platform.ToLower()) && g.Rating.ToLower().Contains(rating.ToLower()));
             return filteredGames;
-        }
+        }        
     }
 }
