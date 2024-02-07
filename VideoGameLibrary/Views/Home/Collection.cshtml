@@ -9,7 +9,13 @@ else
     <div class="row p-3 m-3">
         <div class="col d-flex justify-content-between">
             <h1>@Model.Count() Games Available</h1>
-            <a asp-controller="Home" asp-action="Filter" class="btn btn-primary mx-2"> Filter Games <i class="bi bi-plus-circle"></i></a>
+            @* <a asp-controller="Home" asp-action="Filter" class="btn btn-primary mx-2"> Filter <i class="bi bi-plus-circle"></i></a> *@
+            <form asp-controller="Home" asp-action="Filter" method="post">
+                <input name="genre" placeholder="Genre" />
+                <input name="platform" placeholder="Platform" />
+                <input name="rating" placeholder="Rating" />
+                <button class="btn btn-primary" type="submit">Filter</button>
+            </form>
             <a asp-controller="Home" asp-action="Add" class="btn btn-primary mx-2"> Add Game <i class="bi bi-plus-circle"></i></a>
         </div>
     </div>

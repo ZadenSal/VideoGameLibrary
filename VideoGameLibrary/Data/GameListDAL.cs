@@ -40,10 +40,31 @@ namespace VideoGameLibrary.Data
         {
             return db.Games;
         }
-        public IEnumerable<Game> FilterCollection(string genre, string platform, string rating)
+        //public IEnumerable<Game> FilterCollection(string? genre, string? platform, string? rating)
+        //{
+        //    IEnumerable<Game> filteredGames = db.Games.Where(g => g.Genre.ToLower().Contains(genre.ToLower()) && g.Platform.ToLower().Contains(platform.ToLower()) && g.Rating.ToLower().Contains(rating.ToLower()));
+        //    return filteredGames;
+        //}
+        public IEnumerable<Game> FilterCollection(string? genre, string? platform, string? rating)
         {
-            IEnumerable<Game> filteredGames = db.Games.Where(g => g.Genre.ToLower().Contains(genre.ToLower()) && g.Platform.ToLower().Contains(platform.ToLower()) && g.Rating.ToLower().Contains(rating.ToLower()));
-            return filteredGames;
-        }        
+            if(genre == null) 
+                genre = "";
+            if (platform == null)
+                platform = "";
+            if(rating == null)            
+                rating = "";
+            if(genre == "" &&  platform == "" &&  rating == "")
+                return GetCollection();
+
+            IEnumerable<Game> gamesByGenre = GetCollection().Where(g => (!string.IsNullOrEmpty(g.Genre) && g.Genre.ToLower().Contains(genre.ToLower()))).ToList();
+
+            IEnumerable<Game> gamesByPlatform = GetCollection().Where(g => (!string.IsNullOrEmpty(g.Platform) && g.Platform.ToLower().Contains(platform.ToLower()))).ToList();
+
+            IEnumerable<Game> gamesByRating = GetCollection().Where(g => (!string.IsNullOrEmpty(g.Rating) && g.Rating.ToLower().Contains(rating.ToLower()))).ToList();
+
+            IEnumerable<Game> gamesByGenreAndPlatform = gamesByGenre.Intersect(gamesByPlatform);
+
+            return gamesByRating.Intersect(gamesByGenreAndPlatform); 
+        }
     }
 }

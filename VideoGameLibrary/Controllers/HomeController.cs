@@ -31,23 +31,27 @@ namespace VideoGameLibrary.Controllers
             }
             return View();
         }
-        [HttpGet]
-        public IActionResult Filter()
+        public IActionResult Filter(string? genre, string? platform, string? rating)
         {
-            return View();
+            return View("Collection", dal.FilterCollection(genre, platform, rating));
         }
-        [HttpPost]
-        public IActionResult Filter(string genre, string platform, string rating)
-        {
-            if(ModelState.IsValid)
-            {
-                IEnumerable<Game> filteredGames = dal.FilterCollection(genre, platform, rating);
-                return View("Collection", filteredGames);
-            } else
-            {
-                return View();
-            }
-        }
+        //[HttpGet]
+        //public IActionResult Filter()
+        //{
+        //    return View();
+        //}
+        //[HttpPost]
+        //public IActionResult Filter(string genre, string platform, string rating)
+        //{
+        //    if(ModelState.IsValid)
+        //    {
+        //        IEnumerable<Game> filteredGames = dal.FilterCollection(genre, platform, rating);
+        //        return View("Collection", filteredGames);
+        //    } else
+        //    {
+        //        return View();
+        //    }
+        //}
         [HttpGet]
         public IActionResult Add()
         {
